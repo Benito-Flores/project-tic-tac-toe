@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.title,
+.title-txt {
+  text-align: center;
+}
+
+.title {
+  margin-block: 20px 10px;
+}
