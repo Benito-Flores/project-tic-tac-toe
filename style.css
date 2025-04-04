@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: roboto;
 }
 
 body {
@@ -16,4 +17,113 @@ body {
 
 .title {
   margin-block: 20px 10px;
+}
+
+form {
+  width: 500px;
+  margin-block: 30px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.board-container {
+  height: 50vh;
+  border:1;
+  display: grid;
+  gap: 8px;
+  width: 500px;
+  height: 500px;
+  margin-inline: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.board-piece {
+  border: 1px solid gray;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-size: 150px;
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+.board-piece-1 {
+  grid-area: 0;
+}
+
+.board-piece-hover:hover {
+  background-color: white;
+  cursor: pointer;
+}
+
+form {
+  width: 500px;
+  margin-block: 30px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 12px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ccc;
+  font-weight: 500;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #666;
+  border-radius: 8px;
+  background-color: #000;
+  color: white;
+  font-size: 16px;
+}
+
+form input:focus {
+  border-color: white;
+  outline: none;
+}
+
+form > div:first-child {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+form > div:first-child > div {
+  flex: 1;
+}
+
+form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #ddd;
+}
+
+.submit {
+  margin-right: 10px;
 }

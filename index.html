@@ -4,12 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <title>Project: Tic Tac Toe</title>
 </head>
 <body>
 
   <h1 class="title">Project: Tic Tac Toe</h1>
   <p class="title-txt">This project let's you play Tic Tac Toe on the browser.</p>
+
+  <form>
+    <div>
+      <div>
+        <label for="player1">Player 1 Name (x)</label>
+        <input id="player1" type="text" name="player1" required>
+      </div>
+      <div>
+        <label for="player2">Player 2 Name (o)</label>
+        <input id="player2" type="text" name="player2" required>
+      </div>
+    </div>
+    <div>
+      <button class="submit" type="submit">Star Game</button>
+      <button class="reset">Reset</button>
+    </div>
+  </form>
+
+  <div class="board-container">
+    <div class="board-piece-1 board-piece">x</div>
+    <div class="board-piece-2 board-piece"></div>
+    <div class="board-piece-3 board-piece">x</div>
+    <div class="board-piece-4 board-piece"></div>
+    <div class="board-piece-5 board-piece"></div>
+    <div class="board-piece-6 board-piece"></div>
+    <div class="board-piece-7 board-piece"></div>
+    <div class="board-piece-8 board-piece">x</div>
+    <div class="board-piece-9 board-piece"></div>
+  </div>
 
   <script src="./script.js" defer></script>
 </body>
