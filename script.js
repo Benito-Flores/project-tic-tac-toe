@@ -2,117 +2,93 @@
 // ========================= FUNCTIONS ===========================
 // ====================================================================
 
-
-// creates board
+// Creates and manages the game board array
 function createBoard() {
   const gameBoard = ["", "", "", "", "", "", "", "", ""];
 
-  // function that calls the board
+  // Returns the current state of the board
   const getBoard = () => gameBoard;
-  // function that marks a cell if it's an empty string
-  const markCell = function(boardIndex, marker) {
-    if (gameBoard[boardIndex] === "") {
-       return gameBoard[boardIndex] = marker;
-    };
-  };
-  // function to reset a board
-  const resetBoard = function() {
-    // loops through the entire array
-    for(let i = 0; i < gameBoard.length; i++) {
-      gameBoard[i] = "";
-    };
+
+  // Marks a cell with the player's marker if it's empty
+  const markCell = (index, marker) => {
+    if (gameBoard[index] === "") {
+      gameBoard[index] = marker;
+      return true;
+    }
+    return false;
   };
 
-  // returns only the functions to be called
-  // prevents gameBoard from being manipulated on the global scope
+  // Clears all cells to reset the board
+  const resetBoard = () => {
+    for (let i = 0; i < gameBoard.length; i++) {
+      gameBoard[i] = "";
+    }
+  };
+
   return {
     getBoard,
     markCell,
     resetBoard
   };
-};
+}
 
-
-// creates player
+// Creates a player object with a name and marker (X or O)
 function createPlayer(name, marker) {
-  // returns attributes into an object
-  return {
-    name,
-    marker
-  };
-  // same as:
-  // return {
-  //   name: name
-  //   marker: marker
-  // }
-};
+  return { name, marker };
+}
 
-
-// controller that controls actions of the players
+// Controls game logic (turns, win check, switching players)
 function gameController(player1, player2) {
   const playerA = player1;
   const playerB = player2;
-
   let currentPlayer = playerA;
 
-  // logic () is empty to prevent shadowing a variable
-  // this manipulates currentPlayer variable
-  function switchPlayer() {
-    if(currentPlayer === playerB) {
-      currentPlayer = playerA;
-    } else {
-      currentPlayer = playerB;
-    };
+  // Switches the current player after each valid turn
+  const switchPlayer = () => {
+    currentPlayer = currentPlayer === playerB ? playerA : playerB;
   };
 
-  // function calls the currentPlayer after it's
-  // reassigned with the switchPlayer function
+  // Returns the player whose turn it is
   const getCurrentPlayer = () => currentPlayer;
 
-  // Takes gameBoard array and player's marker to check for a win
-  function checkWinner(gameBoard, marker) {
+  // Checks all possible winning combinations for a given marker
+  const checkWinner = (board, marker) => {
     return (
-      (gameBoard[0] === marker && gameBoard[1] === marker && gameBoard[2] === marker) ||
-      (gameBoard[3] === marker && gameBoard[4] === marker && gameBoard[5] === marker) ||
-      (gameBoard[6] === marker && gameBoard[7] === marker && gameBoard[8] === marker) ||
-      (gameBoard[0] === marker && gameBoard[3] === marker && gameBoard[6] === marker) ||
-      (gameBoard[1] === marker && gameBoard[4] === marker && gameBoard[7] === marker) ||
-      (gameBoard[2] === marker && gameBoard[5] === marker && gameBoard[8] === marker) ||
-      (gameBoard[0] === marker && gameBoard[4] === marker && gameBoard[8] === marker) ||
-      (gameBoard[6] === marker && gameBoard[4] === marker && gameBoard[2] === marker)
+      (board[0] === marker && board[1] === marker && board[2] === marker) ||
+      (board[3] === marker && board[4] === marker && board[5] === marker) ||
+      (board[6] === marker && board[7] === marker && board[8] === marker) ||
+      (board[0] === marker && board[3] === marker && board[6] === marker) ||
+      (board[1] === marker && board[4] === marker && board[7] === marker) ||
+      (board[2] === marker && board[5] === marker && board[8] === marker) ||
+      (board[0] === marker && board[4] === marker && board[8] === marker) ||
+      (board[6] === marker && board[4] === marker && board[2] === marker)
     );
-  }
+  };
 
-  function playRound(index) {
-    // 1. Get the current player
+  // Executes one turn of the game
+  const playRound = (index) => {
     const player = getCurrentPlayer();
-  
-    // 2. Try to mark the board at the selected index
     const success = game.markCell(index, player.marker);
-  
-    // 3. If the cell was already taken, do nothing
     if (!success) return;
-  
-    // 4. Check if that move wins the game
+
     const board = game.getBoard();
     const winner = checkWinner(board, player.marker);
-  
+
     if (winner) {
       console.log(`${player.name} wins!`);
+      isGameOver = true;
       return;
     }
-  
-    // 5. If it's not a win, switch turns
-    switchPlayer();
-  }
- 
-  //if (checkWinner(game.getBoard(), controller.getPlayer().marker)) {
-  //  console.log(`${controller.getPlayer().name} is the WINNER!`);
-  //}
 
-  // DO NOT return currentPlayer
-  // because it will save it at compilation as playerA,
-  // always returning playerA
+    if (!board.includes("")) {
+      console.log("It's a tie!");
+      isGameOver = true;
+      return;
+    }
+
+    switchPlayer();
+  };
+
   return {
     playerA,
     playerB,
@@ -121,66 +97,95 @@ function gameController(player1, player2) {
     checkWinner,
     playRound
   };
-};
-
-// ====================================================================
-// ========================= Testing Code =========================
-// ====================================================================
-const game = createBoard();
-console.log(game.getBoard());
-// game.markCell(5, "X");
-// console.log(game.getBoard());
-
-// const player1 = createPlayer("Benito", "X");
-// const player2 = createPlayer("Caitlyn", "O");
-// console.log(player1.name);
-// console.log(player1.marker);
-// console.log(player2.name);
-// console.log(player2.marker);
-
-// const controller = gameController(player1, player2);
-// console.log(controller);
-// console.log(controller.getCurrentPlayer());
-// controller.switchPlayer();
-// console.log(controller.getCurrentPlayer());
-
-// console.log(controller.getCurrentPlayer().name);
-
-// for(let i = 0; i < 3; i++) {
-//   game.markCell(i, controller.getCurrentPlayer().marker);
-// };
-
-// console.log(game.getBoard());
-
-// console.log(controller.checkWinner(game.getBoard(), controller.getCurrentPlayer().marker));
+}
 
 // ====================================================================
 // ======================= DOM MANIPULATION =======================
 // ====================================================================
 
-// global variables
+// DOM elements
 const form = document.querySelector("form");
 const startBtn = document.querySelector(".submit");
 const resetBtn = document.querySelector(".reset");
 const boardPiece = document.querySelectorAll(".board-piece");
-let player1 = "";
-let player2 = "";
+const txtContainer = document.querySelector(".txt-container");
 
+// Game state variables
+let player1;
+let player2;
+let game;
+let controller;
+let isGameOver = false;
+
+// Handles game start (player input, board setup)
 startBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
+  // Create player objects from form input
   player1 = createPlayer(form.elements["player1"].value, "X");
   player2 = createPlayer(form.elements["player2"].value, "O");
-  
+
+  // Clear input fields
+  form.elements["player1"].value = "";
+  form.elements["player2"].value = "";
+
+  // Create board and controller
+  game = createBoard();
+  controller = gameController(player1, player2);
+  isGameOver = false;
+
+  // Display player names
+  txtContainer.textContent = `${player1.name} (X) : ${player2.name} (O)`;
+
+  // Clear the board and set up click events
+  boardPiece.forEach((piece, index) => {
+    piece.textContent = "";
+
+    piece.addEventListener("click", () => {
+      if (isGameOver || piece.textContent !== "") return;
+
+      controller.playRound(index);
+      piece.textContent = game.getBoard()[index];
+      updateHoverClasses();
+
+      const board = game.getBoard();
+      const current = controller.getCurrentPlayer();
+
+      // Display result and end game if there's a winner or tie
+      if (controller.checkWinner(board, current.marker)) {
+        txtContainer.textContent = `${current.name} wins!`;
+        isGameOver = true;
+      } else if (!board.includes("")) {
+        txtContainer.textContent = "It's a tie!";
+        isGameOver = true;
+      }
+    });
+  });
+
+  updateHoverClasses();
 });
 
-resetBtn.addEventListener("click", () => {
-  console.log(player1);
+// Resets the game to its initial state
+resetBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  game.resetBoard();
+  isGameOver = false;
+
+  boardPiece.forEach(piece => {
+    piece.textContent = "";
+  });
+
+  txtContainer.textContent = `${player1.name} (X) : ${player2.name} (O)`;
+  updateHoverClasses();
 });
 
-// 
-boardPiece.forEach(piece => {
-  if (piece.textContent === "") {
-    piece.classList.add("board-piece-hover");
-  };
-});
+// Adds or removes hover class depending on whether a cell is empty
+function updateHoverClasses() {
+  boardPiece.forEach(piece => {
+    if (piece.textContent === "") {
+      piece.classList.add("board-piece-hover");
+    } else {
+      piece.classList.remove("board-piece-hover");
+    }
+  });
+}

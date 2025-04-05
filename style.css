@@ -19,16 +19,6 @@ body {
   margin-block: 20px 10px;
 }
 
-form {
-  width: 500px;
-  margin-block: 30px;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
 .board-container {
   height: 50vh;
   border:1;
@@ -50,7 +40,6 @@ form {
   height: 100%;
   width: 100%;
   font-size: 150px;
-  padding-bottom: 20px;
   overflow: hidden;
 }
 
@@ -65,7 +54,7 @@ form {
 
 form {
   width: 500px;
-  margin-block: 30px;
+  margin-block: 30px 15px;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -74,6 +63,7 @@ form {
   background-color: #1a1a1a;
   border: 1px solid #444;
   border-radius: 12px;
+  align-items: center;
 }
 
 form label {
@@ -126,4 +116,13 @@ form button:hover {
 
 .submit {
   margin-right: 10px;
+}
+
+.txt-container {
+  text-align: center;
+  margin-block: 15px;
+  border: 1px solid #444;
+  width: 500px;
+  margin-inline: auto;
+  padding-block: 20px;
 }
